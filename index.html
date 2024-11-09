@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科研成果展示 - 音乐生成项目</title>
+    <!-- Bootstrap CSS for responsive design -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
+    <style>
+		body {
+			font-family: 'Roboto', sans-serif;
+			background-color: #ffffff;
+			color: #333;
+
+		}
+
+		#header {
+			text-align: center;
+			padding: 20px;
+			background-color: #4a90e2;
+			color: white;
+			margin-bottom: 40px; /* 增加下边距 */
+		}
+
+		.title {
+			font-size: 1.5rem;
+			margin-bottom: 10px;
+		}
+
+		.authors {
+			font-size: 1rem;
+			color: #d1eaff;
+		}
+
+		.max_section-title {
+			background-color: #4a90e2; /* 背景色 */
+			color: white; /* 文字颜色 */
+			padding: 10px 20px; /* 内边距 */
+			border-radius: 5px; /* 圆角 */
+			margin-bottom: 20px; /* 下方间距 */
+		}
+
+		.section-title {
+			background-color: #4a90e2; /* 背景色 */
+			color: white; /* 文字颜色 */
+			padding: 10px 20px; /* 内边距 */
+			border-radius: 5px; /* 圆角 */
+			display: inline-block; /* 仅包裹文字 */
+			margin-bottom: 20px; /* 下方间距 */
+		}
+
+		.music-card {
+			padding: 20px;
+			margin-bottom: 20px;
+			background-color: #f0f8ff;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+			border-radius: 8px;
+		}
+
+		/* 统一音频容器样式 */
+		.audio-container {
+			padding: 20px; /* 内边距 */
+			background-color: #ffffff; /* 背景色 */
+			border-radius: 8px; /* 圆角 */
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+		}
+
+		/* 调整后的音频项样式 */
+		.audio-card {
+			display: flex;
+			flex-direction: row; /* 水平排列 */
+			align-items: center; /* 垂直居中对齐 */
+			justify-content: center; /* 水平居中对齐整体内容 */
+			padding: 10px; /* 内边距 */
+			background-color: transparent; /* 保持透明背景 */
+			box-shadow: none; /* 保持无阴影 */
+			border: none; /* 保持无边框 */
+		}
+
+		.audio-description {
+			flex: 0 0 200px; /* 固定描述宽度 */
+			max-width: 200px; /* 限制最大宽度 */
+			text-align: left; /* 左对齐文本描述 */
+			margin-right: 20px; /* 增加描述与播放器之间的间距 */
+			font-size: 1rem; /* 调整描述文字大小 */
+			color: #333; /* 描述文字颜色 */
+			word-wrap: break-word; /* 允许长单词换行 */
+			overflow: hidden; /* 隐藏超出部分 */
+		}
+
+		.audio-player {
+			max-width: 300px; /* 保持播放器最大宽度 */
+			flex-shrink: 0; /* 防止播放器缩小 */
+		}
+
+		.empty-section {
+			text-align: center;
+			padding: 20px;
+			margin: 20px 0;
+			background-color: #f9f9f9;
+			border-radius: 8px;
+			font-style: italic;
+			color: #999;
+		}
+
+		/* 文件夹标题颜色 */
+		.folder-title {
+			color: #ffffff;
+		}
+
+		.overview-section {
+			padding: 20px;
+			background-color: #f8f9fa; /* 为概述部分添加背景色 */
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(236, 234, 234, 0.1);
+		}
+
+		.overview-image {
+			max-width: 100%; /* 确保图片不超过父容器宽度 */
+			width: 600px; /* 设置一个合理的默认宽度 */
+			height: auto; /* 保持图片比例 */
+			display: block; /* 块级元素 */
+			margin: 0 auto; /* 居中图片 */
+		}
+
+		.overview-description {
+			font-size: 1.4rem; /* 进一步增大文字字号 */
+			margin: 20px auto 0; /* 上方间距并居中限制范围 */
+			max-width: 800px; /* 限制文本宽度，提升可读性 */
+			text-align: left; /* 保持左对齐 */
+			line-height: 1.6; /* 增加行高，提升可读性 */
+			color: #444; /* 优化文本颜色 */
+		}
+		.conclusion-section {
+			text-align: left; /* 左对齐文本 */
+			padding: 20px; /* 添加内边距 */
+			background-color: #f9f9f9; /* 设置背景色 */
+			border-radius: 8px; /* 圆角 */
+			color: #333; /* 文本颜色 */
+			font-size: 1rem; /* 适当调整字号 */
+			line-height: 1.6; /* 增加行高，提升可读性 */
+			margin-bottom: 40px; /* 下方间距，确保与下一个部分有足够距离 */
+		}
+
+    </style>
+</head>
+<body>
+
+<!-- Header Section -->
+<div id="header" class="container-fluid">
+    <h1>Efficient Text-to-Audio Generation Integrated with Fine-Grained Music Style
+		Modulation</h1>
+    <div class="authors"> Anonymous submission</div>
+</div>
+
+
+<div id="research-showcase" class="container mt-5">
+    <h2 class="text-center mb-4 max_section-title">Overview</h2>
+    <div class="overview-section text-center">
+        <img src="1730881123156.png" alt="描述性文字" class="overview-image img-fluid">
+        <p class="overview-description mt-3">The illustration of our proposed framework. (a) depicts the AuDilya model, which leverages two-way Mamba andcross-attention to construct an efficient TTA architecture. In (b), we introduce a music style knob plug-in by incorporating a low-rank decomposition matrix into each cross-attention laver within AuDiMa, During training, a low-rank adapter is fne.tuned using paired sets of text related to musical styles. During inference, users can input text content and adjust a knob tocontrol the intensity of the music style.</p>
+    </div>
+</div>
+
+<div id="research-showcase" class="container mt-5">
+    <h2 class="text-center mb-4 max_section-title">Audio samples-AuDiMa</h2>
+    
+    <!-- 文件夹 1 -->
+    <div class="folder-section mb-4 p-4 rounded shadow-sm bg-light">
+        <div class="audio-container p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <!-- 音频项 1 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A man is speaking in a huge room.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generate/audio_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 2 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A bird is whistling.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generate/audio_2.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 3 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A person is whistling.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generate/audio_3.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 4 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A racing car is passing by and disappear.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generate/audio_4.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 5 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Describe the sound of the ocean.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generate/audio_5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 6 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A cup is filled from a faucet.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generate/audio_6.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="research-showcase" class="container mt-5">
+    <h2 class="text-center mb-4 max_section-title">Audio samples-AudioLDM</h2>
+    
+    <!-- 文件夹 1 -->
+    <div class="folder-section mb-4 p-4 rounded shadow-sm bg-light">
+        <div class="audio-container p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <!-- 音频项 1 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A man is speaking in a huge room.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmp82kug3kb.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 2 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A bird is whistling.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmpah8tbw2g.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 3 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A person is whistling.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmpv2s0pkcw.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 4 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A racing car is passing by and disappear.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmp_22gdihl.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 5 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Describe the sound of the ocean.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmpbsjxfu4k.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 6 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A cup is filled from a faucet.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmp7o3ug_di.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="research-showcase" class="container mt-5">
+    <h2 class="text-center mb-4 max_section-title">Audio samples-Tango</h2>
+    
+    <!-- 文件夹 1 -->
+    <div class="folder-section mb-4 p-4 rounded shadow-sm bg-light">
+        <div class="audio-container p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <!-- 音频项 1 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A man is speaking in a huge room.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmp82kug3kb.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 2 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A bird is whistling.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmpah8tbw2g.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 3 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A person is whistling.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmpv2s0pkcw.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 4 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A racing car is passing by and disappear.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmp_22gdihl.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 5 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Describe the sound of the ocean.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmpbsjxfu4k.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 6 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A cup is filled from a faucet.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="audio_generation_audioldm/tmp7o3ug_di.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="research-showcase" class="container mt-5">
+    <h2 class="text-center mb-4 max_section-title">Music samples-AuDiMa</h2>
+    <!-- 文件夹 2 -->
+    <div class="folder-section mb-4 p-4 rounded shadow-sm bg-light">
+        <div class="audio-container p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <!-- 音频项 1 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is a slow and relaxing piano music.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generate/music_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 2 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is an electronie dance music playedsynthesizers and percussion instruments.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generate/music_2.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 3 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is a new era music for flute playing.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generate/music_3.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 4 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A live performance of classical orchestral music.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generate/music_4.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 5 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is a guitar and drum accompanimentwith a moderate rhythm.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generate/music_5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="research-showcase" class="container mt-5">
+    <h2 class="text-center mb-4 max_section-title">Music samples-Jen-1</h2>
+    <!-- 文件夹 2 -->
+    <div class="folder-section mb-4 p-4 rounded shadow-sm bg-light">
+        <div class="audio-container p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <!-- 音频项 1 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is a slow and relaxing piano music.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generation_jen-1/1.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 2 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is an electronie dance music playedsynthesizers and percussion instruments.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generation_jen-1/2.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 3 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is a new era music for flute playing.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generation_jen-1/3.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 4 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A live performance of classical orchestral music.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generation_jen-1/4.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 5 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is a guitar and drum accompanimentwith a moderate rhythm.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generation_jen-1/5.mp4" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="research-showcase" class="container mt-5">
+    <h2 class="text-center mb-4 max_section-title">Music samples-MusicLM</h2>
+    <!-- 文件夹 2 -->
+    <div class="folder-section mb-4 p-4 rounded shadow-sm bg-light">
+        <div class="audio-container p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <!-- 音频项 1 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is a slow and relaxing piano music.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generation_musiclm/1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 2 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is an electronie dance music playedsynthesizers and percussion instruments.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generation_musiclm/2.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 3 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is a new era music for flute playing.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generation_musiclm/3.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 4 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">A live performance of classical orchestral music.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generation_musiclm/4.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 5 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">This is a guitar and drum accompanimentwith a moderate rhythm.</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="music_generation_musiclm/5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="research-showcase" class="container mt-5">
+    <h2 class="text-center mb-4 max_section-title">Music style knob samples</h2>
+    <!-- 文件夹 3 -->
+    <div class="folder-section mb-4 p-4 rounded shadow-sm bg-light">
+        <h3 class="folder-title mb-3 section-title">A neurtal piano music(sad-happy)</h3>
+        <div class="audio-container p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <!-- 音频项 1 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity -1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="sad-happy/piano_伤心——1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity -1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="piano_happy_no_lora/piano_伤心-1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 2 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity -0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="sad-happy/piano_伤心——0.6.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity -0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="piano_happy_no_lora/piano_伤心-0.6.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 3 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 0</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="sad-happy/piano——0.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 0</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="piano_happy_no_lora/piano_0.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 4 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="sad-happy/piano_开心—0.6.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="piano_happy_no_lora/piano_开心-0.6.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 5 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="sad-happy/piano_开心—1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="piano_happy_no_lora/piano_开心—1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="folder-section mb-4 p-4 rounded shadow-sm bg-light">
+        <h3 class="folder-title mb-3 section-title">A neurtal guitar music(dark-sunny)</h3>
+        <div class="audio-container p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <!-- 音频项 1 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity -1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="dark-sunny/music_dark_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity -1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="guitar_dark_no_lora/music_dark_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 2 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity -0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="dark-sunny/music_dark_0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity -0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="guitar_dark_no_lora/music_dark_0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 3 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 0</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="dark-sunny/music_dark_sunny_0.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 0</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="guitar_dark_no_lora/music_dark_sunny_0.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 4 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="dark-sunny/music_sunny _0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="guitar_dark_no_lora/music_sunny_0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 5 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="dark-sunny/music_sunny _1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="guitar_dark_no_lora/music_sunny_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文件夹 4 -->
+    <div class="folder-section mb-4 p-4 rounded shadow-sm bg-light">
+        <h3 class="folder-title mb-3 section-title">A neurtal electronic music(lonely-cheerful)</h3>
+        <div class="audio-container p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <!-- 音频项 1 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity -1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="electronic-longly-cheerful/electronic_music_lonely_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity -1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="electronic_lonely_no_lora/electronic_music_lonely_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 2 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity -0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="electronic-longly-cheerful/electronic_music_lonely_0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity -0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="electronic_lonely_no_lora/electronic_music_lonely_0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 3 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 0</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="electronic-longly-cheerful/electronic_music_lonely_0.2.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 0</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="electronic-longly-cheerful/electronic_music_lonely_0.2.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 4 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="electronic-longly-cheerful/electronic_music_cheerful_0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="electronic_lonely_no_lora/electronic_music_cheerful_0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 5 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="electronic-longly-cheerful/electronic_music_cheerful_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="electronic_lonely_no_lora/electronic_music_cheerful_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="folder-section mb-4 p-4 rounded shadow-sm bg-light">
+        <h3 class="folder-title mb-3 section-title">A neurtal drum music(classical-pop)</h3>
+        <div class="audio-container p-3 bg-white rounded shadow-sm">
+            <div class="row">
+                <!-- 音频项 1 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity -1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="classical-pop/music_-1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity -1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="gongshi7/drum_no_lora/music_-1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 2 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity -0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="classical-pop/music_-0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity -0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="gongshi7/drum_no_lora/music_-0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 3 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 0</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="classical-pop/music_0.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 0</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="gongshi7/drum_no_lora/music_0.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 4 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="classical-pop/music_0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 0.5</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="gongshi7/drum_no_lora/music_0.5.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <!-- 音频项 5 -->
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">Control intensity 1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="classical-pop/music_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="audio-card">
+                        <p class="audio-description">No LoRA: Control intensity 1</p>
+                        <audio class="audio-player" controls preload="auto">
+                            <source src="gongshi7/drum_no_lora/music_1.wav" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Placeholder Sections for Future Use -->
+<div class="container">
+	<div class="container mt-5">
+		<h2 class="section-title">Conclusion</h2>
+		<div class="conclusion-section">
+			This paper introduces AuDiMa, a streamlined TTA back-bone equipped with a fine-grained music style control module, advancing audio/music generation from a creative artistic perspective. The limitation of this study is its omission of long music generation and multi-style fusion. We will address these aspects in the future to enhance the model's capabilities.
+		</div>
+	</div>
+
+</div>
+
+<!-- JavaScript for Speed Control -->
+<script>
+    function changeSpeed(audioId, speed) {
+        document.getElementById(audioId).playbackRate = parseFloat(speed);
+    }
+</script>
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
